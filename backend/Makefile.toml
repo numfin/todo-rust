@@ -1,0 +1,14 @@
+[config]
+skip_core_tasks = true
+
+[tasks.build]
+command = "cargo"
+args = ["build", "--release"]
+
+[tasks.dev]
+run_task = "run"
+watch = { watch = ["./src"] }
+
+[tasks.run]
+command = "cargo"
+args = ["run"]
