@@ -4,11 +4,23 @@ skip_core_tasks = true
 [tasks.build]
 command = "cargo"
 args = ["build", "--release"]
+dependencies = ["prepare-db"]
 
 [tasks.dev]
-run_task = "run"
-watch = { watch = ["./src"] }
+run_task = { name = ["run"], parallel = true }
 
 [tasks.run]
 command = "cargo"
 args = ["run"]
+watch = { watch = ["./src"] }
+env_files = ['./.env']
+
+[tasks.db]
+command = "docker-compose"
+args = ["up"]
+watch = { watch = ["./compose.yml"] }
+
+[tasks.prepare-db]
+command = "cargo"
+args = ["sqlx", "prepare"]
+env_files = ['./.env']
